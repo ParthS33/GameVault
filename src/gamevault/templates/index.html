@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>GameVault</title>
+  <link rel="stylesheet" href="/static/styles.css">
+  <script src="/static/script.js" defer></script>
+  <meta name="gamevault-user-id" content="{{ user_id }}">
+</head>
+<body>
+
+  <nav class="top-nav">
+    <h2>GameVault</h2>
+    <button class="menu-button" onclick="toggleMenu()">☰</button>
+  </nav>
+
+  <div id="side-menu" class="side-menu">
+    <a href="/">🏠 Home</a>
+
+    {% if not user %}
+      <a href="/login">🔐 Login</a>
+      <a href="/register">📝 Register</a>
+    {% else %}
+      <a href="/connect">🔌 Connect</a>
+      <a href="/logout">🚪 Logout</a>
+    {% endif %}
+  </div>
+
+  <main class="content-container">
+
+    {% if user %}
+    <div class="welcome-message">
+      👋 Welcome, {{ user }}!
+    </div>
+    {% endif %}
+
+    <h1>Your Game Library</h1>
+
+    <div class="game-grid">
+      {% for game in games %}
+      <div class="game-tile">
+        <img src="{{ game.icon_url }}" alt="Game Icon">
+        <h3>{{ game.name }}</h3>
+        <p>Owned on: {{ ", ".join(game.launchers) }}</p>
+      </div>
+      {% endfor %}
+    </div>
+
+  </main>
+</body>
+</html>

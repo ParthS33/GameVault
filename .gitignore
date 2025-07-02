@@ -1,0 +1,58 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual Environment
+venv/
+env/
+.venv/
+.env/
+
+# Pytest cache
+.pytest_cache/
+
+# MyPy cache
+.mypy_cache/
+
+# VSCode settings
+.vscode/
+
+# macOS files
+.DS_Store
+
+# Logs
+*.log
+
+# IDE specific
+.idea/
+
+# Database or SQLite files (if you generate any local db)
+*.sqlite3
+*.db
+
+# Python environment files
+Pipfile.lock
+poetry.lock
+
+# Compiled C extensions
+*.so
+
+# Coverage reports
+htmlcov/
+.coverage
+.coverage.*
+
+# Test results
+junit-*.xml
+
+# Build artifacts
+build/
+dist/
+*.egg-info/
+
+# Secrets or config
+.env.local
+.env.production
+secrets.json
+.env
