@@ -22,10 +22,17 @@
     <h1>Connect Your Game Launchers</h1>
     <div class="platform-grid">
       {% for platform in ["Epic", "Steam", "Xbox", "GOG"] %}
-      <form action="/sync/{{ platform.lower() }}" method="post" class="platform-tile">
-        <h2>{{ platform }}</h2>
-        <button type="submit">Connect</button>
-      </form>
+        {% if platform == "Steam" %}
+          <a href="/sync/steam" class="platform-tile">
+            <h2>{{ platform }}</h2>
+            <button type="button">Connect</button>
+          </a>
+        {% else %}
+          <form action="/sync/{{ platform.lower() }}" method="post" class="platform-tile">
+            <h2>{{ platform }}</h2>
+            <button type="submit">Connect</button>
+          </form>
+        {% endif %}
       {% endfor %}
     </div>
   </main>

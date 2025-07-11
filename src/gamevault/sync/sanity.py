@@ -27,6 +27,15 @@ async def sanity_check(user_id: int, titles: list[str], launchers: str) -> list[
         insert_query = "INSERT INTO temp_titles(title) VALUES (:title)"
         await database.execute_many(insert_query, [{"title": t} for t in titles])
 
+        # Step 2.5: Insert Packs into non_games
+        await database.execute("""
+                    INSERT INTO non_games(title, source, reason)
+                    SELECT title, :launchers, 'Pack'
+                    FROM temp_titles
+                    WHERE title ILIKE '%Combo Pack' OR title ILIKE '%Starter Pack'
+                    ON CONFLICT (title, source) DO NOTHING
+                """, {"launchers": launchers})
+
         # Step 3: Select only valid games
         query = """
             SELECT temp_titles.title

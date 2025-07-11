@@ -16,10 +16,10 @@ users_sessions = Table(
     "users_sessions",
     metadata,
     Column("id", Integer, primary_key=True),
-    Column("session_id", String, unique=True),
-    Column("epic_connected", Boolean, default=False),
-    Column("steam_connected", Boolean, default=False),
-    Column("xbox_connected", Boolean, default=False)
+    Column("user_id", Integer, ForeignKey("users.id"), unique=True),
+    Column("epic_id", String, nullable=True),   # stores Epic user ID (or None)
+    Column("steam_id", String, nullable=True),  # stores SteamID64
+    Column("xbox_id", String, nullable=True)    # stores Xbox user ID
 )
 
 user_owned_games = Table(
@@ -43,7 +43,7 @@ users = Table(
     Column("hashed_password", String, nullable=False)
 )
 
-from sqlalchemy import Table, Column, Integer, String, Text, TIMESTAMP
+from sqlalchemy import Table, Column, Integer, String, Text, TIMESTAMP, UniqueConstraint
 from gamevault.db.setup import metadata
 
 non_games = Table(
@@ -53,7 +53,8 @@ non_games = Table(
     Column("title", Text, nullable=False),
     Column("source", Text),
     Column("reason", Text),
-    Column("added_at", TIMESTAMP)
+    Column("added_at", TIMESTAMP),
+    UniqueConstraint("title", "source", name="uq_non_games_title_source")
 )
 
 games = Table(

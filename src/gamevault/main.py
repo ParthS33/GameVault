@@ -9,6 +9,7 @@ from gamevault.auth.routes import router as auth_router
 from starlette.middleware.sessions import SessionMiddleware
 from gamevault.sync.epic import router as epic_router
 from gamevault.db.queries import get_user_games
+from gamevault.sync import steam
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -19,8 +20,10 @@ app = FastAPI(lifespan=lifespan)
 app.add_middleware(SessionMiddleware, secret_key="your-super-secret-key")
 app.include_router(auth_router)
 app.include_router(epic_router)
+app.include_router(steam.router)
 print("✅ Auth routes loaded")
 print("✅ Epic routes loaded")
+print("✅ Steam routes loaded")
 from fastapi.middleware.cors import CORSMiddleware
 
 app.add_middleware(
